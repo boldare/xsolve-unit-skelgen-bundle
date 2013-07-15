@@ -2,8 +2,8 @@
 
 namespace Xsolve\UnitSkelgenBundle\Utils;
 
+use SplFileInfo;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Finder\SplFileInfo;
 
 class NameTools
 {
@@ -26,6 +26,15 @@ class NameTools
         $filenameWithoutSrc = str_replace($this->getSourceDir(), '', $filenameWithoutExt);
         $taintedClassName = str_replace('/', '\\', $filenameWithoutSrc);
         return preg_replace('/\\+/', '\\', $taintedClassName);
+    }
+    
+    public function createTestFilename($filename)
+    {
+        $matches = array();
+        preg_match('/[^\/]Bundle\//', $filename, $matches);
+        $lastMatch = end($matches);
+        $filenameWithDir = str_replace($lastMatch, $lastMatch . 'Tests/', $filename);
+        return preg_replace('/\.php$/i', 'Test.php', $filenameWithDir);
     }
     
     public function getSourceDir()

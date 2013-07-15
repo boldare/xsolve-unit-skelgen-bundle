@@ -25,11 +25,11 @@ class TestGenerationCommand extends ContainerAwareCommand
     {
         $namespace = $in->getArgument('namespace');
         $locator = $this->getContainer()->get('xsolve_unit_skelgen.class_locator');
-        $runner = $this->getContainer()->get('xsolve_unit_skelgen.test_runner');
+        $runner = $this->getContainer()->get('xsolve_unit_skelgen.runner');
         
         $result = $locator->locate($namespace);
         foreach ($result as $item) {
-            $runner->execute($item);
+            $runner->executeTestGeneration($item);
         }
     }
 }

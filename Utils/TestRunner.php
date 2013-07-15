@@ -11,19 +11,6 @@ class TestRunner extends Runner
     
     protected function prepareResultNames(LocateResult $locateResult)
     {
-        $filename = $locateResult->getFilename();
-        $matches = array();
-        preg_match('/[^\/]Bundle\//', $filename, $matches);
-        $lastMatch = end($matches);
-        $filenameWithDir = str_replace($lastMatch, $lastMatch . 'Tests/', $filename);
-        $this->resultClassFilename = preg_replace('/\.php$/i', 'Test.php', $filenameWithDir);
         
-        $nameTools = $this->container->get('xsolve_unit_skelgen.name_tools');
-        $sourceDir = $nameTools->getSourceDir();
-        $filenameWithoutExt = preg_replace('/\.php$/', '', $this->resultClassFilename);
-        $filenameWithoutSrc = str_replace($sourceDir, '', $filenameWithoutExt);
-        $taintedClassName = str_replace('/', '\\', $filenameWithoutSrc);
-        $this->resultQualifiedClassName = preg_replace('/\\+/', '\\', $taintedClassName);
-        var_dump($this->resultQualifiedClassName);
     }
 }
