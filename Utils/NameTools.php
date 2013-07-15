@@ -25,7 +25,8 @@ class NameTools
         $filenameWithoutExt = preg_replace('/\.php$/', '', $filename);
         $filenameWithoutSrc = str_replace($this->getSourceDir(), '', $filenameWithoutExt);
         $taintedClassName = str_replace('/', '\\', $filenameWithoutSrc);
-        return preg_replace('/\\+/', '\\', $taintedClassName);
+        $className = preg_replace('/\\+/', '\\', $taintedClassName);
+        return preg_replace('/^\\\/', '', $className);
     }
     
     public function createTestFilename($filename)
