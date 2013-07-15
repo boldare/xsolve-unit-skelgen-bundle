@@ -2,12 +2,12 @@
 
 namespace Xsolve\UnitSkelgenBundle\Command;
 
-use Symfony\Component\Console\Command\Command;
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class TestGenerationCommand extends Command
+class TestGenerationCommand extends ContainerAwareCommand
 {
     protected function configure()
     {
@@ -25,5 +25,11 @@ class TestGenerationCommand extends Command
     {
         $namespace = $in->getArgument('namespace');
         $out->writeln('You requested test generation for ' . $namespace . ' namespace');
+        $locator = $this->getContainer()->get('xsolve_unit_skelgen.class_locator');
+        $result = $locator->locate($namespace);
+        foreach ($result as $item) {
+            echo $item->getQualifiedClassName() . PHP_EOL;
+            echo $item->getFilename() . PHP_EOL;
+        }
     }
 }
