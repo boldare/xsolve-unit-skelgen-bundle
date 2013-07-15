@@ -1,7 +1,21 @@
 parameters:
-#    xsolve_unit_skelgen.example.class: Xsolve\UnitSkelgenBundle\Example
+    xsolve_unit_skelgen.class_locator.class: Xsolve\UnitSkelgenBundle\Utils\ClassLocator
+    xsolve_unit_skelgen.runner.class: Xsolve\UnitSkelgenBundle\Utils\Runner
+    xsolve_unit_skelgen.name_tools.class: Xsolve\UnitSkelgenBundle\Utils\NameTools
 
 services:
-#    xsolve_unit_skelgen.example:
-#        class: %xsolve_unit_skelgen.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+  
+    xsolve_unit_skelgen.class_locator:
+        class: %xsolve_unit_skelgen.class_locator.class%
+        arguments:
+            - "@service_container"
+          
+    xsolve_unit_skelgen.runner:
+        class: %xsolve_unit_skelgen.runner.class%
+        arguments:
+            - "@service_container"
+          
+    xsolve_unit_skelgen.name_tools:
+        class: %xsolve_unit_skelgen.name_tools.class%
+        arguments:
+            - "@service_container"
