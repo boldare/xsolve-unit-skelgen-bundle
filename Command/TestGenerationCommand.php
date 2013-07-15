@@ -24,12 +24,12 @@ class TestGenerationCommand extends ContainerAwareCommand
     public function execute(InputInterface $in, OutputInterface $out)
     {
         $namespace = $in->getArgument('namespace');
-        $out->writeln('You requested test generation for ' . $namespace . ' namespace');
         $locator = $this->getContainer()->get('xsolve_unit_skelgen.class_locator');
+        $runner = $this->getContainer()->get('xsolve_unit_skelgen.runner');
+        
         $result = $locator->locate($namespace);
         foreach ($result as $item) {
-            echo $item->getQualifiedClassName() . PHP_EOL;
-            echo $item->getFilename() . PHP_EOL;
+            $runner->run($item);
         }
     }
 }
