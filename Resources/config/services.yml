@@ -1,7 +1,8 @@
 parameters:
-#    xsolve_unit_skelgen.example.class: Xsolve\UnitSkelgenBundle\Example
+    xsolve_unit_skelgen.class_locator.class: Xsolve\UnitSkelgenBundle\Utils\ClassLocator
 
 services:
-#    xsolve_unit_skelgen.example:
-#        class: %xsolve_unit_skelgen.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    xsolve_unit_skelgen.class_locator:
+        class: %xsolve_unit_skelgen.class_locator.class%
+        calls:
+          - [setContainer, ['@service_container']]
