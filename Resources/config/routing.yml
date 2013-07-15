@@ -1,3 +1,0 @@
-xsolve_unit_skelgen_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: XsolveUnitSkelgenBundle:Default:index }
