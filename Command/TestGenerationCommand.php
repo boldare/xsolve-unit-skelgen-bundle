@@ -2,12 +2,11 @@
 
 namespace Xsolve\UnitSkelgenBundle\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class TestGenerationCommand extends ContainerAwareCommand
+class TestGenerationCommand extends AbstractGenerationCommand
 {
     protected function configure()
     {
@@ -20,16 +19,9 @@ class TestGenerationCommand extends ContainerAwareCommand
             )
         ;
     }
-    
-    public function execute(InputInterface $in, OutputInterface $out)
-    {
-        $namespace = $in->getArgument('namespace');
-        $locator = $this->getContainer()->get('xsolve_unit_skelgen.class_locator');
-        $runner = $this->getContainer()->get('xsolve_unit_skelgen.test_runner');
         
-        $result = $locator->locate($namespace);
-        foreach ($result as $item) {
-            $runner->execute($item);
-        }
+    protected function processItem($item)
+    {
+        return $this->runner->executeTestGeneration($item);
     }
 }
