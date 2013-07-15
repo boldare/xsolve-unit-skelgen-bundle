@@ -2,19 +2,28 @@
 
 namespace Xsolve\UnitSkelgenBundle\Utils;
 
-use SplFileInfo;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Finder\Finder;
 
 class ClassLocator
 {
+    private $container;
+    
+    /**
+     * @var NameTools
+     */
+    private $nameTools;
+    
     private $result = array();
+    
+    private $namespace;
+    private $namespaceDir;
+    private $filename;
     
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
-        $this->rootDir = $this->container->getParameter('kernel.root_dir');
-        $this->sourceDir = $this->getRealPath($this->rootDir . '/../src');
+        $this->nameTools = $this->container->get('xsolve_unit_skelgen.name_tools');
     }
     
     public function locate($namespace)
@@ -30,19 +39,9 @@ class ClassLocator
     protected function prepare($namespace)
     {
         $this->namespace = $namespace;
-        $this->namespaceDir = $this->sourceDir . '/' . str_replace('\\', '/', $this->namespace);
+        $namespaceDir = '/' . str_replace('\\', '/', $this->namespace);
+        $this->namespaceDir = $this->nameTools->getSourceDir() . $namespaceDir;
         $this->filename = $this->namespaceDir . '.php';
-    }
-    
-    public function getSourceDir()
-    {
-        return $this->sourceDir;
-    }
-    
-    protected function getRealPath($filename)
-    {
-        $fileInfo = new SplFileInfo($filename);
-        return $fileInfo->getRealPath();
     }
     
     protected function getSingleResult()
@@ -67,11 +66,9 @@ class ClassLocator
     
     protected function createResult($filename)
     {
-        $filenameWithoutExt = preg_replace('/\.php$/', '', $filename);
-        $filenameWithoutSrc = str_replace($this->sourceDir, '', $filenameWithoutExt);
-        $taintedClassName = str_replace('/', '\\', $filenameWithoutSrc);
-        $qualifiedClassName = preg_replace('/\\+/', '\\', $taintedClassName);
-        return new LocateResult($filename, $qualifiedClassName);
+        return new LocateResult(
+            $filename,
+            $this->nameTools->createQualifiedClassName($filename)
+        );
     }
-    
 }

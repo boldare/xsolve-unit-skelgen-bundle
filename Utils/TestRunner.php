@@ -18,8 +18,8 @@ class TestRunner extends Runner
         $filenameWithDir = str_replace($lastMatch, $lastMatch . 'Tests/', $filename);
         $this->resultClassFilename = preg_replace('/\.php$/i', 'Test.php', $filenameWithDir);
         
-        $locator = $this->container->get('xsolve_unit_skelgen.class_locator');
-        $sourceDir = $locator->getSourceDir();
+        $nameTools = $this->container->get('xsolve_unit_skelgen.name_tools');
+        $sourceDir = $nameTools->getSourceDir();
         $filenameWithoutExt = preg_replace('/\.php$/', '', $this->resultClassFilename);
         $filenameWithoutSrc = str_replace($sourceDir, '', $filenameWithoutExt);
         $taintedClassName = str_replace('/', '\\', $filenameWithoutSrc);
