@@ -50,8 +50,8 @@ class Runner
             $this->resultQualifiedClassName,
             $this->resultClassFilename
         );
+        exec($cmd);
         return '===> running: ' . $cmd . PHP_EOL;
-        //exec($cmd);
     }
     
     protected function prepareResultNames($filename)
@@ -59,7 +59,7 @@ class Runner
         if ('test' === $this->mode) {
             $this->resultClassFilename = $this->nameTools->createTestFilename($filename);
         } else {
-            //
+            $this->resultClassFilename = $this->nameTools->createProductionClassFilename($filename);
         }
         $this->resultQualifiedClassName = $this->nameTools->createQualifiedClassName($this->resultClassFilename);
     }
