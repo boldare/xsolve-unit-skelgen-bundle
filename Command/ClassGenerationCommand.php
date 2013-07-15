@@ -2,12 +2,9 @@
 
 namespace Xsolve\UnitSkelgenBundle\Command;
 
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
 
-class ClassGenerationCommand extends Command
+class ClassGenerationCommand extends AbstractGenerationCommand
 {
     protected function configure()
     {
@@ -21,9 +18,8 @@ class ClassGenerationCommand extends Command
         ;
     }
     
-    public function execute(InputInterface $in, OutputInterface $out)
+    protected function processItem($item)
     {
-        $namespace = $in->getArgument('namespace');
-        $out->writeln('You requested production class generation for ' . $namespace . ' namespace');
+        return $this->runner->executeClassGeneration($item);
     }
 }
