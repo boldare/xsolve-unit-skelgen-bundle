@@ -20,9 +20,10 @@ class TestRunner extends Runner
         
         $locator = $this->container->get('xsolve_unit_skelgen.class_locator');
         $sourceDir = $locator->getSourceDir();
-        $filenameWithoutExt = preg_replace('/\.php$/', '', $filename);
+        $filenameWithoutExt = preg_replace('/\.php$/', '', $this->resultClassFilename);
         $filenameWithoutSrc = str_replace($sourceDir, '', $filenameWithoutExt);
         $taintedClassName = str_replace('/', '\\', $filenameWithoutSrc);
         $this->resultQualifiedClassName = preg_replace('/\\+/', '\\', $taintedClassName);
+        var_dump($this->resultQualifiedClassName);
     }
 }
