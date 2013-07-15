@@ -29,7 +29,8 @@ class TestGenerationCommand extends ContainerAwareCommand
         
         $result = $locator->locate($namespace);
         foreach ($result as $item) {
-            $runner->executeTestGeneration($item);
+            $output = $runner->executeTestGeneration($item);
+            $out->writeln($output);
         }
     }
 }

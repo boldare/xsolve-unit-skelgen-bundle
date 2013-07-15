@@ -1,7 +1,7 @@
 parameters:
     xsolve_unit_skelgen.class_locator.class: Xsolve\UnitSkelgenBundle\Utils\ClassLocator
-    xsolve_unit_skelgen.runner: Xsolve\UnitSkelgenBundle\Utils\Runner
-    xsolve_unit_skelgen.name_tools: Xsolve\UnitSkelgenBundle\Utils\NameTools
+    xsolve_unit_skelgen.runner.class: Xsolve\UnitSkelgenBundle\Utils\Runner
+    xsolve_unit_skelgen.name_tools.class: Xsolve\UnitSkelgenBundle\Utils\NameTools
 
 services:
   
@@ -11,11 +11,11 @@ services:
             - "@service_container"
           
     xsolve_unit_skelgen.runner:
-        class: %xsolve_unit_skelgen.runner%
+        class: %xsolve_unit_skelgen.runner.class%
         arguments:
             - "@service_container"
           
     xsolve_unit_skelgen.name_tools:
-        class: %xsolve_unit_skelgen.name_tools%
+        class: %xsolve_unit_skelgen.name_tools.class%
         arguments:
             - "@service_container"

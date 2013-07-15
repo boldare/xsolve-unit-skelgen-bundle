@@ -28,13 +28,13 @@ class Runner
     public function executeTestGeneration(LocateResult $locateResult)
     {
         $this->mode = 'test';
-        $this->execute($locateResult);
+        return $this->execute($locateResult);
     }
     
     public function executeClassGeneration(LocateResult $locateResult)
     {
         $this->mode = 'class';
-        $this->execute($locateResult);
+        return $this->execute($locateResult);
     }
     
     protected function execute(LocateResult $locateResult)
@@ -50,7 +50,7 @@ class Runner
             $this->resultQualifiedClassName,
             $this->resultClassFilename
         );
-        echo 'execute ' . $cmd . PHP_EOL;
+        return '===> running: ' . $cmd . PHP_EOL;
         //exec($cmd);
     }
     
@@ -67,7 +67,6 @@ class Runner
     protected function createTargetDir()
     {
         $dirname = dirname($this->resultClassFilename);
-        var_dump($dirname);
         if (!is_dir($dirname)) {
             mkdir($dirname, 0777, true);
         }
