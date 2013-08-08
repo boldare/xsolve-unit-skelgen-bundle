@@ -1,21 +1,25 @@
 parameters:
-    xsolve_unit_skelgen.class_locator.class: Xsolve\UnitSkelgenBundle\Utils\ClassLocator
+    symfony.finder.class: Symfony\Component\Finder\Finder
+    xsolve_unit_skelgen.class_locator.class: Xsolve\UnitSkelgenBundle\Locator\ClassLocator
     xsolve_unit_skelgen.runner.class: Xsolve\UnitSkelgenBundle\Utils\Runner
     xsolve_unit_skelgen.name_tools.class: Xsolve\UnitSkelgenBundle\Utils\NameTools
 
 services:
-  
+    symfony.finder:
+      class: %symfony.finder.class%
+
+    xsolve_unit_skelgen.name_tools:
+        class: %xsolve_unit_skelgen.name_tools.class%
+        arguments:
+            - %kernel.root_dir%
+
     xsolve_unit_skelgen.class_locator:
         class: %xsolve_unit_skelgen.class_locator.class%
         arguments:
-            - "@service_container"
-          
+            - "@symfony.finder"
+            - "@xsolve_unit_skelgen.name_tools"
+
     xsolve_unit_skelgen.runner:
         class: %xsolve_unit_skelgen.runner.class%
-        arguments:
-            - "@service_container"
-          
-    xsolve_unit_skelgen.name_tools:
-        class: %xsolve_unit_skelgen.name_tools.class%
         arguments:
             - "@service_container"

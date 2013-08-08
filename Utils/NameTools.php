@@ -2,16 +2,22 @@
 
 namespace Xsolve\UnitSkelgenBundle\Utils;
 
-use SplFileInfo;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use \SplFileInfo;
 
 class NameTools
 {
-    protected $container;
+    protected $rootDir;
+    protected $sourceDir;
     
-    public function __construct(ContainerInterface $container)
+    public function __construct($rootDir)
     {
-        $this->container = $container;
+        $this->rootDir = $rootDir;
+        $this->sourceDir = $this->getRealPath($rootDir . '/../src');
+    }
+    
+    public function getSourceDir()
+    {
+        return $this->sourceDir;
     }
     
     public function getRealPath($filename)
@@ -45,11 +51,5 @@ class NameTools
         $lastMatch = end($matches);
         $filenameWithoutTests = str_replace($lastMatch, '/', $filename);
         return preg_replace('/Test\.php$/i', '.php', $filenameWithoutTests);
-    }
-    
-    public function getSourceDir()
-    {
-        $rootDir = $this->container->getParameter('kernel.root_dir');
-        return $this->getRealPath($rootDir . '/../src');
     }
 }

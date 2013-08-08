@@ -1,8 +1,8 @@
 <?php
 
-namespace Xsolve\UnitSkelgenBundle\Utils;
+namespace Xsolve\UnitSkelgenBundle\Metadata;
 
-class LocateResult
+class LocationMetadata
 {
     protected $filename;
     protected $qualifiedClassName;
