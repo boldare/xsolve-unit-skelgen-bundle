@@ -11,12 +11,12 @@ use Xsolve\UnitSkelgenBundle\Utils\Runner;
 abstract class AbstractGenerationCommand extends ContainerAwareCommand
 {
     /**
-     * @var ClassLocator
+     * @var ClassLocator $locator
      */
     protected $locator;
     
     /**
-     * @var Runner
+     * @var Runner $runner
      */
     protected $runner;
     
@@ -24,9 +24,13 @@ abstract class AbstractGenerationCommand extends ContainerAwareCommand
     {
         $namespace = $in->getArgument('namespace');
         $this->locator = $this->getContainer()->get('xsolve_unit_skelgen.class_locator');
-        $this->runner = $this->getContainer()->get('xsolve_unit_skelgen.runner');
+        //$this->runner = $this->getContainer()->get('xsolve_unit_skelgen.runner');
         
         $result = $this->locator->locate($namespace);
+        
+        var_dump($result);
+        die();
+        
         foreach ($result as $item) {
             $output = $this->processItem($item);
             $out->writeln($output);
