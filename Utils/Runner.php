@@ -6,17 +6,17 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class Runner
 {
-    private $container;
+    protected $container;
     
     /**
-     * @var NameTools
+     * @var NameTools $nameTools
      */
-    private $nameTools;
+    protected $nameTools;
     
-    private $bootstrapFile;
-    private $mode;
-    private $resultQualifiedClassName;
-    private $resultClassFilename;
+    protected $bootstrapFile;
+    protected $mode;
+    protected $resultQualifiedClassName;
+    protected $resultClassFilename;
     
     public function __construct(ContainerInterface $container)
     {
