@@ -13,35 +13,35 @@ class ClassLocator
      * @var Finder $finder
      */
     protected $finder;
-    
+
     /**
      * @var NameTools $nameTools
      */
     protected $nameTools;
-    
+
     public function __construct(Finder $finder, NameTools $nameTools)
     {
         $this->finder = $finder;
         $this->nameTools = $nameTools;
     }
-    
+
     public function locate($namespace)
     {
         $namespaceMetadata = $this->createNamespaceMetadata($namespace);
         if ($namespaceMetadata->isFile()) {
             return $this->getSingleResult($namespaceMetadata);
         }
-        
+
         return $this->getNamespaceResult($namespaceMetadata);
     }
-    
+
     protected function getSingleResult(NamespaceMetadata $namespaceMetadata)
     {
         return array(
             $this->createResult($namespaceMetadata->getFilename())
         );
     }
-    
+
     protected function getNamespaceResult(NamespaceMetadata $namespaceMetadata)
     {
         $files = $this->findFiles($namespaceMetadata);
@@ -49,10 +49,10 @@ class ClassLocator
         foreach ($files as $file) {
             $result[] = $this->createLocationMetadata($file->getRealpath());
         }
-        
+
         return $result;
     }
-    
+
     protected function findFiles(NamespaceMetadata $namespaceMetadata)
     {
         return $this->finder
@@ -61,7 +61,7 @@ class ClassLocator
             ->in($namespaceMetadata->getNamespaceDir())
             ->name('*.php');
     }
-    
+
     protected function createNamespaceMetadata($namespace)
     {
         return new NamespaceMetadata(
@@ -69,7 +69,7 @@ class ClassLocator
             $namespace
         );
     }
-    
+
     protected function createLocationMetadata($filename)
     {
         return new LocationMetadata(

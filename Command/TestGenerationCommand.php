@@ -16,7 +16,7 @@ class TestGenerationCommand extends AbstractGenerationCommand
                 'Namespace to generate tests for'
             );
     }
-    
+
     protected function prepareRunner()
     {
         $this->runner = $this->getContainer()

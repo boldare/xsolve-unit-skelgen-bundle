@@ -11,24 +11,24 @@ abstract class AbstractGenerationRunner
      * @var NameTools $nameTools
      */
     protected $nameTools;
-    
+
     /**
      * @var string $bootstrapFile
      */
     protected $bootstrapFile;
-    
+
     public function __construct(NameTools $nameTools)
     {
         $this->nameTools = $nameTools;
         $this->bootstrapFile = $this->nameTools
             ->getRootDir() . '/bootstrap.php.cache';
     }
-    
+
     public function run(LocationMetadata $locationMetadata)
     {
         $args = $this->createArgumentsMetadata($locationMetadata);
         $this->createTargetDir($args->getResultFilename());
-        
+
         $cmd = sprintf(
             'phpunit-skelgen --bootstrap %s --%s -- "%s" %s "%s" %s',
             $this->bootstrapFile,
@@ -42,9 +42,9 @@ abstract class AbstractGenerationRunner
         //exec($cmd);
         return $args;
     }
-    
-    protected abstract function createArgumentsMetadata(LocationMetadata $locationMetadata);
-    
+
+    abstract protected function createArgumentsMetadata(LocationMetadata $locationMetadata);
+
     protected function createTargetDir($filename)
     {
         $dirname = dirname($filename);

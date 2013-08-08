@@ -16,7 +16,7 @@ class ClassGenerationCommand extends AbstractGenerationCommand
                 'Namespace to generate production classes for'
             );
     }
-    
+
     protected function prepareRunner()
     {
         $this->runner = $this->getContainer()
