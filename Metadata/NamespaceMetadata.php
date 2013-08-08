@@ -8,31 +8,31 @@ class NamespaceMetadata
     protected $namespace;
     protected $namespaceDir;
     protected $filename;
-    
-    function __construct($sourceDir, $namespace)
+
+    public function __construct($sourceDir, $namespace)
     {
         $this->sourceDir = $sourceDir;
         $this->namespace = $namespace;
         $this->namespaceDir = $sourceDir . '/' . str_replace('\\', '/', $namespace);
         $this->filename = $this->namespaceDir . '.php';
     }
-    
-    function getNamespace()
+
+    public function getNamespace()
     {
         return $this->namespace;
     }
-    
-    function getNamespaceDir()
+
+    public function getNamespaceDir()
     {
         return $this->namespaceDir;
     }
-    
-    function getFilename()
+
+    public function getFilename()
     {
         return $this->filename;
     }
-    
-    function isFile()
+
+    public function isFile()
     {
         return is_file($this->filename);
     }

@@ -14,23 +14,23 @@ abstract class AbstractGenerationCommand extends ContainerAwareCommand
      * @var ClassLocator $locator
      */
     protected $locator;
-    
+
     /**
      * @var Runner $runner
      */
     protected $runner;
-    
+
     public function execute(InputInterface $in, OutputInterface $out)
     {
         $this->locator = $this->getContainer()->get('xsolve_unit_skelgen.class_locator');
         $this->prepareRunner();
-        
+
         $namespace = $in->getArgument('namespace');
         $result = $this->locator->locate($namespace);
         foreach ($result as $item) {
             $this->runner->run($item);
         }
     }
-    
-    protected abstract function prepareRunner();
+
+    abstract protected function prepareRunner();
 }

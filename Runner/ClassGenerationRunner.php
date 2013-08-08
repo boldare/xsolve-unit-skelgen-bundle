@@ -13,11 +13,12 @@ class ClassGenerationRunner extends AbstractGenerationRunner
             ->createProductionClassFilename($locationMetadata->getFilename());
         $resultQualifiedClassName = $this->nameTools
             ->createQualifiedClassName($resultFilename);
-        
+
         $args = new ArgumentsMetadata('class', $locationMetadata);
         $args
             ->setResultFilename($resultFilename)
             ->setResultQualifiedClassName($resultQualifiedClassName);
+
         return $args;
-    }   
+    }
 }
