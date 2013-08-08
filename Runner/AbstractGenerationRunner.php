@@ -2,71 +2,52 @@
 
 namespace Xsolve\UnitSkelgenBundle\Runner;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Xsolve\UnitSkelgenBundle\Metadata\LocationMetadata;
+use Xsolve\UnitSkelgenBundle\Utils\NameTools;
 
-class AbstractGenerationRunner
+abstract class AbstractGenerationRunner
 {
-    protected $container;
-    
     /**
      * @var NameTools $nameTools
      */
     protected $nameTools;
     
+    /**
+     * @var string $bootstrapFile
+     */
     protected $bootstrapFile;
-    protected $mode;
-    protected $resultQualifiedClassName;
-    protected $resultClassFilename;
     
-    public function __construct(ContainerInterface $container)
+    public function __construct(NameTools $nameTools)
     {
-        $this->container = $container;
-        $this->nameTools = $this->container->get('xsolve_unit_skelgen.name_tools');
-        $this->bootstrapFile = $this->container->getParameter('kernel.root_dir') . '/bootstrap.php.cache';
+        $this->nameTools = $nameTools;
+        $this->bootstrapFile = $this->nameTools
+            ->getRootDir() . '/bootstrap.php.cache';
     }
     
-    public function executeTestGeneration(LocateResult $locateResult)
+    public function run(LocationMetadata $locationMetadata)
     {
-        $this->mode = 'test';
-        return $this->execute($locateResult);
-    }
-    
-    public function executeClassGeneration(LocateResult $locateResult)
-    {
-        $this->mode = 'class';
-        return $this->execute($locateResult);
-    }
-    
-    protected function execute(LocateResult $locateResult)
-    {
-        $this->prepareResultNames($locateResult->getFilename());
-        $this->createTargetDir();
+        $args = $this->createArgumentsMetadata($locationMetadata);
+        $this->createTargetDir($args->getResultFilename());
+        
         $cmd = sprintf(
             'phpunit-skelgen --bootstrap %s --%s -- "%s" %s "%s" %s',
             $this->bootstrapFile,
-            $this->mode,
-            $locateResult->getQualifiedClassName(),
-            $locateResult->getFilename(),
-            $this->resultQualifiedClassName,
-            $this->resultClassFilename
+            $args->getMode(),
+            $args->getQualifiedClassName(),
+            $args->getFilename(),
+            $args->getResultQualifiedClassName(),
+            $args->getResultFilename()
         );
-        exec($cmd);
-        return '===> running: ' . $cmd . PHP_EOL;
+        var_dump($cmd);
+        //exec($cmd);
+        return $args;
     }
     
-    protected function prepareResultNames($filename)
-    {
-        if ('test' === $this->mode) {
-            $this->resultClassFilename = $this->nameTools->createTestFilename($filename);
-        } else {
-            $this->resultClassFilename = $this->nameTools->createProductionClassFilename($filename);
-        }
-        $this->resultQualifiedClassName = $this->nameTools->createQualifiedClassName($this->resultClassFilename);
-    }
+    protected abstract function createArgumentsMetadata(LocationMetadata $locationMetadata);
     
-    protected function createTargetDir()
+    protected function createTargetDir($filename)
     {
-        $dirname = dirname($this->resultClassFilename);
+        $dirname = dirname($filename);
         if (!is_dir($dirname)) {
             mkdir($dirname, 0777, true);
         }
