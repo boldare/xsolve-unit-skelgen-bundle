@@ -1,10 +1,10 @@
 <?php
 
-namespace Xsolve\UnitSkelgenBundle\Utils;
+namespace Xsolve\UnitSkelgenBundle\Runner;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class Runner
+class AbstractGenerationRunner
 {
     protected $container;
     

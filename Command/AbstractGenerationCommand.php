@@ -5,8 +5,8 @@ namespace Xsolve\UnitSkelgenBundle\Command;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Xsolve\UnitSkelgenBundle\Utils\ClassLocator;
-use Xsolve\UnitSkelgenBundle\Utils\Runner;
+use Xsolve\UnitSkelgenBundle\Locator\ClassLocator;
+use Xsolve\UnitSkelgenBundle\Runner\Runner;
 
 abstract class AbstractGenerationCommand extends ContainerAwareCommand
 {
@@ -22,20 +22,18 @@ abstract class AbstractGenerationCommand extends ContainerAwareCommand
     
     public function execute(InputInterface $in, OutputInterface $out)
     {
-        $namespace = $in->getArgument('namespace');
         $this->locator = $this->getContainer()->get('xsolve_unit_skelgen.class_locator');
-        //$this->runner = $this->getContainer()->get('xsolve_unit_skelgen.runner');
+        var_dump($this->locator);
+        $this->prepareRunner();
+        var_dump($this->runner);
         
+        $namespace = $in->getArgument('namespace');
         $result = $this->locator->locate($namespace);
-        
-        var_dump($result);
-        die();
-        
+        var_dump($result); die();
         foreach ($result as $item) {
-            $output = $this->processItem($item);
-            $out->writeln($output);
+            $this->runner->run($item);
         }
     }
     
-    protected abstract function processItem($item);
+    protected abstract function prepareRunner();
 }

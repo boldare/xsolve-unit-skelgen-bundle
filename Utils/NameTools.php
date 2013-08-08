@@ -12,7 +12,12 @@ class NameTools
     public function __construct($rootDir)
     {
         $this->rootDir = $rootDir;
-        $this->sourceDir = $this->getRealPath($rootDir . '/../src');
+        $this->sourceDir = $this->getRealPath($rootDir . '/../src/');
+    }
+    
+    public function getRootDir()
+    {
+        return $this->rootDir;
     }
     
     public function getSourceDir()
