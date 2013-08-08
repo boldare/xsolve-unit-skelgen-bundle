@@ -4,8 +4,8 @@ namespace Xsolve\UnitSkelgenBundle\Utils;
 
 class LocateResult
 {
-    private $filename;
-    private $qualifiedClassName;
+    protected $filename;
+    protected $qualifiedClassName;
     
     public function __construct($filename, $qualifiedClassName)
     {

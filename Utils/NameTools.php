@@ -7,7 +7,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class NameTools
 {
-    private $container;
+    protected $container;
     
     public function __construct(ContainerInterface $container)
     {

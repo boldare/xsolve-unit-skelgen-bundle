@@ -7,18 +7,18 @@ use Symfony\Component\Finder\Finder;
 
 class ClassLocator
 {
-    private $container;
+    protected $container;
     
     /**
-     * @var NameTools
+     * @var NameTools $nameTools
      */
-    private $nameTools;
+    protected $nameTools;
     
-    private $result = array();
+    protected $result = array();
     
-    private $namespace;
-    private $namespaceDir;
-    private $filename;
+    protected $namespace;
+    protected $namespaceDir;
+    protected $filename;
     
     public function __construct(ContainerInterface $container)
     {
