@@ -10,7 +10,7 @@ abstract class AbstractGenerationRunner
     /**
      * @var string $bin
      */
-    
+
     /**
      * @var NameTools $nameTools
      */
@@ -29,7 +29,7 @@ abstract class AbstractGenerationRunner
                 'Please install/configure phpunit-skelgen binary'
             );
         }
-        
+
         $this->nameTools = $nameTools;
         $this->bootstrapFile = $this->nameTools
             ->getRootDir() . '/bootstrap.php.cache';
@@ -50,28 +50,29 @@ abstract class AbstractGenerationRunner
             $args->getResultQualifiedClassName(),
             $args->getResultFilename()
         );
-        //var_dump($cmd);
-        //exec($cmd);
-        return $args;
+        exec($cmd, $output, $returnValue);
+
+        return $returnValue;
     }
 
     abstract protected function createArgumentsMetadata(LocationMetadata $locationMetadata);
 
-    protected function checkInstallation() {
+    protected function checkInstallation()
+    {
         if (!preg_match('/linux/i', PHP_OS)) {
             return true;
         }
-        
+
         $path = shell_exec('which ' . $this->bin);
         if (strlen($path) > 0) {
             return true;
-        } else if (file_exists($this->bin)) {
+        } elseif (file_exists($this->bin)) {
             return true;
         }
-        
+
         return false;
     }
-    
+
     protected function createTargetDir($filename)
     {
         $dirname = dirname($filename);
