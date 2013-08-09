@@ -8,6 +8,10 @@ use Xsolve\UnitSkelgenBundle\Utils\NameTools;
 abstract class AbstractGenerationRunner
 {
     /**
+     * @var string $bin
+     */
+    
+    /**
      * @var NameTools $nameTools
      */
     protected $nameTools;
@@ -17,8 +21,15 @@ abstract class AbstractGenerationRunner
      */
     protected $bootstrapFile;
 
-    public function __construct(NameTools $nameTools)
+    public function __construct($bin, NameTools $nameTools)
     {
+        $this->bin = $bin;
+        if (!$this->checkInstallation()) {
+            throw new \InvalidArgumentException(
+                'Please install/configure phpunit-skelgen binary'
+            );
+        }
+        
         $this->nameTools = $nameTools;
         $this->bootstrapFile = $this->nameTools
             ->getRootDir() . '/bootstrap.php.cache';
@@ -30,7 +41,8 @@ abstract class AbstractGenerationRunner
         $this->createTargetDir($args->getResultFilename());
 
         $cmd = sprintf(
-            'phpunit-skelgen --bootstrap %s --%s -- "%s" %s "%s" %s',
+            '%s --bootstrap %s --%s -- "%s" %s "%s" %s',
+            $this->bin,
             $this->bootstrapFile,
             $args->getMode(),
             $args->getQualifiedClassName(),
@@ -38,13 +50,28 @@ abstract class AbstractGenerationRunner
             $args->getResultQualifiedClassName(),
             $args->getResultFilename()
         );
-        var_dump($cmd);
+        //var_dump($cmd);
         //exec($cmd);
         return $args;
     }
 
     abstract protected function createArgumentsMetadata(LocationMetadata $locationMetadata);
 
+    protected function checkInstallation() {
+        if (!preg_match('/linux/i', PHP_OS)) {
+            return true;
+        }
+        
+        $path = shell_exec('which ' . $this->bin);
+        if (strlen($path) > 0) {
+            return true;
+        } else if (file_exists($this->bin)) {
+            return true;
+        }
+        
+        return false;
+    }
+    
     protected function createTargetDir($filename)
     {
         $dirname = dirname($filename);

@@ -23,9 +23,11 @@ services:
     xsolve_unit_skelgen.class_gen_runner:
         class: %xsolve_unit_skelgen.class_gen_runner.class%
         arguments:
+            - %xsolve_unit_skelgen.bin%
             - "@xsolve_unit_skelgen.name_tools"
 
     xsolve_unit_skelgen.test_gen_runner:
         class: %xsolve_unit_skelgen.test_gen_runner.class%
         arguments:
+            - %xsolve_unit_skelgen.bin%
             - "@xsolve_unit_skelgen.name_tools"
