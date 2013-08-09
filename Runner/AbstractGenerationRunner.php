@@ -76,7 +76,12 @@ abstract class AbstractGenerationRunner
     {
         $dirname = dirname($filename);
         if (!is_dir($dirname)) {
-            mkdir($dirname, 0777, true);
+            $result = mkdir($dirname, 0777, true);
+            if (!$result) {
+                throw new \RuntimeException(
+                    'Cannot create target directory. Please check your permissions.'
+                );
+            }
         }
     }
 }
