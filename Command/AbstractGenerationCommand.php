@@ -28,8 +28,20 @@ abstract class AbstractGenerationCommand extends ContainerAwareCommand
         $namespace = $in->getArgument('namespace');
         $result = $this->locator->locate($namespace);
         foreach ($result as $item) {
-            $this->runner->run($item);
+            $returnValue = $this->runner->run($item);
+            $this->writeStatusLine($out, $returnValue, $item->getQualifiedClassName());
         }
+    }
+
+    protected function writeStatusLine(OutputInterface $out, $returnValue, $qualifiedClassName)
+    {
+        if ($returnValue > 0) {
+            $out->write('[ <error>FAIL</error> ]');
+        } else {
+            $out->write('[ <info>OK</info> ]');
+        }
+
+        $out->writeln(' ' . $qualifiedClassName);
     }
 
     abstract protected function prepareRunner();

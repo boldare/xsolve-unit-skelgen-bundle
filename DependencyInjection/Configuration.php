@@ -19,7 +19,7 @@ class Configuration implements ConfigurationInterface
     {
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('xsolve_unit_skelgen');
-        
+
         $rootNode
             ->children()
                 ->scalarNode('bin')
