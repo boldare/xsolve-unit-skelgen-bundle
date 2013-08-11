@@ -6,6 +6,7 @@ use Symfony\Component\Finder\Finder;
 use Xsolve\UnitSkelgenBundle\Metadata\LocationMetadata;
 use Xsolve\UnitSkelgenBundle\Metadata\NamespaceMetadata;
 use Xsolve\UnitSkelgenBundle\Utils\NameTools;
+use Xsolve\UnitSkelgenBundle\Utils\PathTools;
 
 class ClassLocator
 {
@@ -19,16 +20,22 @@ class ClassLocator
      */
     protected $nameTools;
 
-    public function __construct(Finder $finder, NameTools $nameTools)
+    /**
+     * @var PathTools $pathTools
+     */
+    protected $pathTools;
+
+    public function __construct(Finder $finder, NameTools $nameTools, PathTools $pathTools)
     {
         $this->finder = $finder;
         $this->nameTools = $nameTools;
+        $this->pathTools = $pathTools;
     }
 
     public function locate($namespace)
     {
         $namespaceMetadata = $this->createNamespaceMetadata($namespace);
-        if ($namespaceMetadata->isFile()) {
+        if ($this->pathTools->isFile($namespaceMetadata->getFilename())) {
             return $this->getSingleResult($namespaceMetadata);
         }
 
@@ -38,7 +45,7 @@ class ClassLocator
     protected function getSingleResult(NamespaceMetadata $namespaceMetadata)
     {
         return array(
-            $this->createResult($namespaceMetadata->getFilename())
+            $this->createLocationMetadata($namespaceMetadata->getFilename())
         );
     }
 
@@ -47,7 +54,7 @@ class ClassLocator
         $files = $this->findFiles($namespaceMetadata);
         $result = array();
         foreach ($files as $file) {
-            $result[] = $this->createLocationMetadata($file->getRealpath());
+            $result[] = $this->createLocationMetadata($file->getRealPath());
         }
 
         return $result;

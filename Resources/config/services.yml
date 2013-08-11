@@ -1,6 +1,6 @@
 parameters:
     symfony.finder.class: Symfony\Component\Finder\Finder
-    xsolve_unit_skelgen.normalizer.class: Xsolve\UnitSkelgenBundle\Utils\Normalizer
+    xsolve_unit_skelgen.path_tools.class: Xsolve\UnitSkelgenBundle\Utils\PathTools
     xsolve_unit_skelgen.name_tools.class: Xsolve\UnitSkelgenBundle\Utils\NameTools
     xsolve_unit_skelgen.class_locator.class: Xsolve\UnitSkelgenBundle\Locator\ClassLocator
     xsolve_unit_skelgen.class_gen_runner.class: Xsolve\UnitSkelgenBundle\Runner\ClassGenerationRunner
@@ -10,13 +10,13 @@ services:
     symfony.finder:
       class: %symfony.finder.class%
 
-    xsolve_unit_skelgen.normalizer:
-        class: %xsolve_unit_skelgen.normalizer.class%
+    xsolve_unit_skelgen.path_tools:
+        class: %xsolve_unit_skelgen.path_tools.class%
 
     xsolve_unit_skelgen.name_tools:
         class: %xsolve_unit_skelgen.name_tools.class%
         arguments:
-            - "@xsolve_unit_skelgen.normalizer"
+            - "@xsolve_unit_skelgen.path_tools"
             - %kernel.root_dir%
 
     xsolve_unit_skelgen.class_locator:
@@ -24,6 +24,7 @@ services:
         arguments:
             - "@symfony.finder"
             - "@xsolve_unit_skelgen.name_tools"
+            - "@xsolve_unit_skelgen.path_tools"
 
     xsolve_unit_skelgen.class_gen_runner:
         class: %xsolve_unit_skelgen.class_gen_runner.class%

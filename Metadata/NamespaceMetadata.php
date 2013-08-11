@@ -31,9 +31,4 @@ class NamespaceMetadata
     {
         return $this->filename;
     }
-
-    public function isFile()
-    {
-        return is_file($this->filename);
-    }
 }
