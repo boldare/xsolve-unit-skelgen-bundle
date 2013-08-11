@@ -2,16 +2,20 @@
 
 namespace Xsolve\UnitSkelgenBundle\Utils;
 
-use \SplFileInfo;
-
 class NameTools
 {
+    /**
+     * @var Normalizer $normalizer
+     */
+    protected $normalizer;
+
     protected $rootDir;
     protected $sourceDir;
 
-    public function __construct($rootDir)
+    public function __construct(Normalizer $normalizer, $rootDir)
     {
-        $this->rootDir = $rootDir;
+        $this->normalizer = $normalizer;
+        $this->rootDir = $this->getRealPath($rootDir);
         $this->sourceDir = $this->getRealPath($rootDir . '/../src/');
     }
 
@@ -27,9 +31,8 @@ class NameTools
 
     public function getRealPath($filename)
     {
-        $fileInfo = new SplFileInfo($filename);
-
-        return $fileInfo->getRealPath();
+        return $this->normalizer
+            ->normalize($filename);
     }
 
     public function createQualifiedClassName($filename)
@@ -44,21 +47,37 @@ class NameTools
 
     public function createTestFilename($filename)
     {
-        $matches = array();
-        preg_match('/[^\/]Bundle\//', $filename, $matches);
-        $lastMatch = end($matches);
-        $filenameWithTests = str_replace($lastMatch, $lastMatch . 'Tests/', $filename);
+        $lastMatch = $this->findLastMatch('/\/[^\/]+Bundle\//', $filename);
+        $replacement =  $lastMatch['text'] . 'Tests/';
+        $filenameWithTests = $this->replaceLastMatch($lastMatch, $filename, $replacement);
 
         return preg_replace('/\.php$/i', 'Test.php', $filenameWithTests);
     }
 
     public function createProductionClassFilename($filename)
     {
-        $matches = array();
-        preg_match('/\/Tests\//', $filename, $matches);
-        $lastMatch = end($matches);
-        $filenameWithoutTests = str_replace($lastMatch, '/', $filename);
+        $lastMatch = $this->findLastMatch('/\/Tests\//', $filename);
+        $filenameWithoutTests = $this->replaceLastMatch($lastMatch, $filename, '/');
 
         return preg_replace('/Test\.php$/i', '.php', $filenameWithoutTests);
+    }
+
+    protected function findLastMatch($re, $filename)
+    {
+        $matches = array();
+        preg_match_all($re, $filename, $matches, PREG_OFFSET_CAPTURE);
+        $lastMatch = end($matches[0]);
+
+        return array(
+            'text' => $lastMatch[0],
+            'pos' => $lastMatch[1]
+        );
+    }
+
+    protected function replaceLastMatch($lastMatch, $filename, $replacement)
+    {
+        return substr($filename, 0, $lastMatch['pos'])
+            . $replacement
+            . substr($filename, $lastMatch['pos'] + strlen($lastMatch['text']));
     }
 }
