@@ -2,6 +2,7 @@
 
 namespace Xsolve\UnitSkelgenBundle\Tests\Utils;
 
+use Mockery;
 use Xsolve\UnitSkelgenBundle\Utils\NameTools;
 
 class NameToolsTest extends \PHPUnit_Framework_TestCase
@@ -40,15 +41,20 @@ class NameToolsTest extends \PHPUnit_Framework_TestCase
      */
     protected $nameTools;
 
+    public function tearDown()
+    {
+        Mockery::close();
+    }
+
     public function setUp()
     {
-        $normalizerMock = \Mockery::mock('Xsolve\UnitSkelgenBundle\Utils\Normalizer');
-        $normalizerMock
+        $pathToolsMock = Mockery::mock('Xsolve\UnitSkelgenBundle\Utils\PathTools');
+        $pathToolsMock
             ->shouldReceive('normalize')
             ->times(2)
             ->andReturn(self::FAKE_ROOT, self::FAKE_SRC);
 
-        $this->nameTools = new NameTools($normalizerMock, self::FAKE_ROOT);
+        $this->nameTools = new NameTools($pathToolsMock, self::FAKE_ROOT);
     }
 
     public function testGetRootDir()

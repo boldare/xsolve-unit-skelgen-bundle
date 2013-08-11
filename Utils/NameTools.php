@@ -5,18 +5,18 @@ namespace Xsolve\UnitSkelgenBundle\Utils;
 class NameTools
 {
     /**
-     * @var Normalizer $normalizer
+     * @var PathTools $pathTools
      */
-    protected $normalizer;
+    protected $pathTools;
 
     protected $rootDir;
     protected $sourceDir;
 
-    public function __construct(Normalizer $normalizer, $rootDir)
+    public function __construct(PathTools $pathTools, $rootDir)
     {
-        $this->normalizer = $normalizer;
-        $this->rootDir = $this->getRealPath($rootDir);
-        $this->sourceDir = $this->getRealPath($rootDir . '/../src/');
+        $this->pathTools = $pathTools;
+        $this->rootDir = $this->pathTools->normalize($rootDir);
+        $this->sourceDir = $this->pathTools->normalize($rootDir . '/../src/');
     }
 
     public function getRootDir()
@@ -27,12 +27,6 @@ class NameTools
     public function getSourceDir()
     {
         return $this->sourceDir;
-    }
-
-    public function getRealPath($filename)
-    {
-        return $this->normalizer
-            ->normalize($filename);
     }
 
     public function createQualifiedClassName($filename)
