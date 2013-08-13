@@ -10,6 +10,7 @@ abstract class AbstractGenerationRunner
     /**
      * @var string $bin
      */
+    protected $bin;
 
     /**
      * @var NameTools $nameTools
@@ -52,7 +53,13 @@ abstract class AbstractGenerationRunner
         );
         exec($cmd, $output, $returnValue);
 
-        return $returnValue;
+        if ($returnValue > 0) {
+            throw new \RuntimeException(
+                'phpunit-skelgen for ' . $args->getQualifiedClassName() . ' failed with code ' . $returnValue
+            );
+        }
+
+        return $args;
     }
 
     abstract protected function createArgumentsMetadata(LocationMetadata $locationMetadata);
