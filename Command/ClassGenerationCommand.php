@@ -14,12 +14,12 @@ class ClassGenerationCommand extends AbstractGenerationCommand
             ->addArgument(
                 'namespace', InputArgument::REQUIRED,
                 'Namespace to generate production classes for'
-            )
-        ;
+            );
     }
-    
-    protected function processItem($item)
+
+    protected function prepareRunner()
     {
-        return $this->runner->executeClassGeneration($item);
+        $this->runner = $this->getContainer()
+            ->get('xsolve_unit_skelgen.class_gen_runner');
     }
 }
