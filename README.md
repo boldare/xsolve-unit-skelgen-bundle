@@ -4,9 +4,11 @@ This bundle helps with PHPUnit test suites creation by using phpunit-skelgen (Sk
 
 Features:
 
-* feature 1
-* feature 2
-* feature 3
+* creates test suite class respectively to given namespace (for instance 
+Controller/DemoController.php will have test in Test/Controller/DemoControllerTest.php)
+* asterisk pattern matching - it will create test suites for every matching class
+* fully TDD capable - creates production classes based on test suite class
+* easy to extend and introduce changes in the future
 
 # Installation
 
