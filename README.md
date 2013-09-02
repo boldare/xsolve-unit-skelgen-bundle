@@ -12,6 +12,8 @@ Controller/DemoController.php will have test in Test/Controller/DemoControllerTe
 * fully TDD capable - creates production classes based on test suite class
 * easy to extend and introduce changes in the future
 
+![Example usage](https://raw.github.com/xsolve-pl/xsolve-unit-skelgen-bundle/master/Resources/doc/xsolve-unit-skelgen-bundle-example.png)
+
 # Installation
 
 1) Add to composer.json
