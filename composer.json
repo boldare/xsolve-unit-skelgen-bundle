@@ -1,0 +1,12 @@
+{
+    "name": "xsolve-pl/xsolve-unit-skelgen-bundle",
+    "type": "symfony-bundle",
+    "description": "XSolve PHPUnit SkelGen Bundle to improve creating test cases for PHPUnit",
+    "keywords": ["PHPUnit", "SkelGen", "unit tests", "test driven development", "tdd"],
+    "homepage": "https://github.com/xsolve-pl/xsolve-unit-skelgen-bundle",
+    "license": "MIT",
+    "autoload": {
+        "psr-0": { "Xsolve\\UnitSkelgenBundle": "" }
+    },
+    "target-dir": "Xsolve/UnitSkelgenBundle"
+}
