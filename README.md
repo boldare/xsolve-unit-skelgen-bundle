@@ -6,7 +6,7 @@ Features:
 
 * creates test suite class respectively to given namespace (for instance 
 Controller/DemoController.php will have test in Test/Controller/DemoControllerTest.php)
-* asterisk pattern matching - it will create test suites for every matching class
+* asterisks and dots pattern matching - it will create test suites for every matching class in found directory
 * fully TDD capable - creates production classes based on test suite class
 * easy to extend and introduce changes in the future
 
@@ -14,14 +14,8 @@ Controller/DemoController.php will have test in Test/Controller/DemoControllerTe
 
 1) Add to composer.json
 
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "git@github.com:xsolve-pl/xsolve-unit-skelgen-bundle.git"
-        }   
-    ],
     "require": {
-        "xsolve-pl/xsolve-unit-skelgen-bundle": "dev-master"
+        "xsolve-pl/xsolve-unit-skelgen-bundle": "1.0.*"
     }
 
 2) Install dependencies
