@@ -8,5 +8,8 @@
     "autoload": {
         "psr-0": { "Xsolve\\UnitSkelgenBundle": "" }
     },
-    "target-dir": "Xsolve/UnitSkelgenBundle"
+    "target-dir": "Xsolve/UnitSkelgenBundle",
+    "require-dev": {
+        "mockery/mockery": "0.8.0"
+    }
 }
