@@ -2,6 +2,8 @@
 
 [![knpbundles.com](http://knpbundles.com/xsolve-pl/xsolve-unit-skelgen-bundle/badge)](http://knpbundles.com/xsolve-pl/xsolve-unit-skelgen-bundle)
 
+[![Build Status](https://travis-ci.org/xsolve-pl/xsolve-unit-skelgen-bundle.png?branch=master)](https://travis-ci.org/xsolve-pl/xsolve-unit-skelgen-bundle)
+
 This bundle helps with PHPUnit test suites creation by using phpunit-skelgen (Skeleton Generator)
 
 Features:
