@@ -10,6 +10,7 @@
     },
     "target-dir": "Xsolve/UnitSkelgenBundle",
     "require-dev": {
-        "mockery/mockery": "0.8.0"
+        "mockery/mockery": "0.8.0",
+        "satooshi/php-coveralls": "dev-master"
     }
 }
