@@ -4,6 +4,9 @@
 
 [![Build Status](https://travis-ci.org/xsolve-pl/xsolve-unit-skelgen-bundle.png?branch=master)](https://travis-ci.org/xsolve-pl/xsolve-unit-skelgen-bundle)
 
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/033dad83-796b-48c2-ba32-6b48a4e8f4c3/big.png)](https://insight.sensiolabs.com/projects/033dad83-796b-48c2-ba32-6b48a4e8f4c3)
+
+
 This bundle helps with PHPUnit test suites creation by using phpunit-skelgen (Skeleton Generator)
 
 Features:
