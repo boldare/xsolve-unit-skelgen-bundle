@@ -1,6 +1,7 @@
 {
     "name": "xsolve-pl/xsolve-unit-skelgen-bundle",
     "type": "symfony-bundle",
+    "version": "v2.0.0",
     "description": "XSolve PHPUnit SkelGen Bundle to improve creating test cases for PHPUnit",
     "keywords": ["PHPUnit", "SkelGen", "unit tests", "test driven development", "tdd"],
     "homepage": "https://github.com/xsolve-pl/xsolve-unit-skelgen-bundle",

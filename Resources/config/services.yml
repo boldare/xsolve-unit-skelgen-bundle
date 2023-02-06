@@ -8,32 +8,32 @@ parameters:
 
 services:
     symfony.finder:
-      class: %symfony.finder.class%
+      class: '%symfony.finder.class%'
 
     xsolve_unit_skelgen.path_tools:
-        class: %xsolve_unit_skelgen.path_tools.class%
+        class: '%xsolve_unit_skelgen.path_tools.class%'
 
     xsolve_unit_skelgen.name_tools:
-        class: %xsolve_unit_skelgen.name_tools.class%
+        class: '%xsolve_unit_skelgen.name_tools.class%'
         arguments:
             - "@xsolve_unit_skelgen.path_tools"
-            - %kernel.root_dir%
+            - '%kernel.root_dir%'
 
     xsolve_unit_skelgen.class_locator:
-        class: %xsolve_unit_skelgen.class_locator.class%
+        class: '%xsolve_unit_skelgen.class_locator.class%'
         arguments:
             - "@symfony.finder"
             - "@xsolve_unit_skelgen.name_tools"
             - "@xsolve_unit_skelgen.path_tools"
 
     xsolve_unit_skelgen.class_gen_runner:
-        class: %xsolve_unit_skelgen.class_gen_runner.class%
+        class: '%xsolve_unit_skelgen.class_gen_runner.class%'
         arguments:
-            - %xsolve_unit_skelgen.bin%
+            - '%xsolve_unit_skelgen.bin%'
             - "@xsolve_unit_skelgen.name_tools"
 
     xsolve_unit_skelgen.test_gen_runner:
-        class: %xsolve_unit_skelgen.test_gen_runner.class%
+        class: '%xsolve_unit_skelgen.test_gen_runner.class%'
         arguments:
-            - %xsolve_unit_skelgen.bin%
+            - '%xsolve_unit_skelgen.bin%'
             - "@xsolve_unit_skelgen.name_tools"
